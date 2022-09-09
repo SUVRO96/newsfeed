@@ -3,19 +3,24 @@ import React, { useEffect, useRef, useState } from "react";
 import Comments from "./Comments";
 import LeftSide from "../common/LeftSide";
 import RightSide from "../common/RightSide";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Feeds = () => {
   const [postItem, setPostItem] = useState([]);
+  const navigate = useNavigate();
   const [successPost, setSuccessPost] = useState(false);
+  const loginData = useSelector(state => state.login.loginDataRedux);
+  console.log(loginData);
   const text = useRef();
 
   const submitPost = async () => {
     if (text.current.value !== "") {
       const url = "http://localhost:4000/feeditems/additems";
       const tempObj = {};
-      tempObj.id = "106";
-      tempObj.userid = "id003";
-      tempObj.name = "Mumaj Alam";
+      tempObj.id = "p" + parseInt(Math.random() * 100000000000);
+      tempObj.userid = loginData.userid;
+      tempObj.name = loginData.name;
       tempObj.itemText = text.current.value;
       const response = await axios.post(url, tempObj);
       if (response.status === 201) {
@@ -39,6 +44,12 @@ const Feeds = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (!loginData) {
+      navigate("/login");
+    }
+  });
 
   useEffect(() => {
     callItemApi();
@@ -91,7 +102,6 @@ const Feeds = () => {
                   )}
                   {item.itemImage && <img src={item.itemImage} alt="post" />}
                 </div>
-                <hr />
                 <Comments id={item.id} />
               </div>
             ))}

@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Comments from "./Comments";
-import LeftSide from "./LeftSide";
-import RightSide from "./RightSide";
+import LeftSide from "../common/LeftSide";
+import RightSide from "../common/RightSide";
 
 const Feeds = () => {
   const [postItem, setPostItem] = useState([]);
@@ -45,11 +45,15 @@ const Feeds = () => {
   }, [successPost]);
 
   return (
-    <div className="d-flex bg-dark">
+    <div className="d-flex">
       <LeftSide />
-      <section className="col-8 bg-light m-2">
+      <section className="col-8 m-2" style={{ backgroundColor: "gray" }}>
         <div className="d-flex flex-column rounded text-center">
-          <textarea className="m-2 border rounded" ref={text}></textarea>
+          <textarea
+            className="m-2 border rounded p-2"
+            ref={text}
+            placeholder="What's on your mind..."
+          ></textarea>
           <span className="align-self-end">
             <button className="btn btn-sm btn-info mx-2" onClick={submitPost}>
               Post
@@ -62,15 +66,32 @@ const Feeds = () => {
           </p>
         )}
 
-        <div className="d-flex flex-column m-2 border border-dark rounded">
+        <div
+          className="d-flex flex-column m-2 border border-dark rounded"
+          style={{ backgroundColor: "lightgray" }}
+        >
           {postItem &&
             postItem.map(item => (
-              <div key={item.id} className="m-1 border border-dark rounded">
-                <div>
-                  <h5>{item.name}</h5>
-                  {item.itemText && <p>{item.itemText}</p>}
+              <div
+                key={item.id}
+                className="m-1 border rounded"
+                style={{ backgroundColor: "white" }}
+              >
+                <div className="m-1">
+                  <div className="d-flex">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/21/21294.png"
+                      alt="profile"
+                      style={{ height: "20px", width: "20px" }}
+                    />
+                    <p style={{ fontWeight: "bold" }}>{item.name}</p>
+                  </div>
+                  {item.itemText && (
+                    <p className="ps-3 post-text">{item.itemText}</p>
+                  )}
                   {item.itemImage && <img src={item.itemImage} alt="post" />}
                 </div>
+                <hr />
                 <Comments id={item.id} />
               </div>
             ))}

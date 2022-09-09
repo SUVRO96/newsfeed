@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoginData } from "./actionLogin";
 
 const Login = () => {
   const email = useRef();
   const password = useRef();
   const errorRef = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginFn = async () => {
     const url = "http://localhost:4000/users/login";
@@ -19,6 +22,7 @@ const Login = () => {
         console.log(response);
         if (response.status === 200) {
           errorRef.current.textContent = "";
+          dispatch(setLoginData(response.data));
           navigate("/");
         }
       } catch (err) {

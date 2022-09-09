@@ -1,0 +1,19 @@
+.post-text {
+}
+
+.comment-btn {
+  outline: none !important;
+  border: none !important;
+}
+
+.comment-btn:active {
+  box-shadow: none !important;
+}
+
+.txtboxItem {
+  height: 3em;
+  font-size: 10px !important;
+  position: relative;
+  top: 5px;
+  margin-left: 5px;
+}

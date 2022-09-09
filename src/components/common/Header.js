@@ -20,32 +20,14 @@ const Header = () => {
             <a className="navbar-brand mt-2 mt-lg-0" href="#">
               <h4>newsFeed</h4>
             </a>
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Dashboard
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Team
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Projects
-                </a>
-              </li>
-            </ul>
           </div>
           <div className="d-flex align-items-center">
             <a className="text-reset me-3" href="#">
               <i className="fas fa-shopping-cart"></i>
             </a>
             <div className="dropdown">
-              <a
+              <button
                 className="text-reset me-3 dropdown-toggle hidden-arrow"
-                href="#"
                 id="navbarDropdownMenuLink"
                 role="button"
                 data-mdb-toggle="dropdown"
@@ -55,7 +37,7 @@ const Header = () => {
                 <span className="badge rounded-pill badge-notification bg-danger">
                   1
                 </span>
-              </a>
+              </button>
               <ul
                 className="dropdown-menu dropdown-menu-end"
                 aria-labelledby="navbarDropdownMenuLink"

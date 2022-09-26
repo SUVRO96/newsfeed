@@ -22,22 +22,13 @@ const Header = () => {
             </a>
           </div>
           <div className="d-flex align-items-center">
-            <a className="text-reset me-3" href="#">
-              <i className="fas fa-shopping-cart"></i>
-            </a>
             <div className="dropdown">
-              <button
-                className="text-reset me-3 dropdown-toggle hidden-arrow"
-                id="navbarDropdownMenuLink"
-                role="button"
-                data-mdb-toggle="dropdown"
-                aria-expanded="false"
-              >
+              <a className="text-reset me-3 dropdown-toggle hidden-arrow">
                 <i className="fas fa-bell"></i>
                 <span className="badge rounded-pill badge-notification bg-danger">
                   1
                 </span>
-              </button>
+              </a>
               <ul
                 className="dropdown-menu dropdown-menu-end"
                 aria-labelledby="navbarDropdownMenuLink"
@@ -69,9 +60,10 @@ const Header = () => {
                 aria-expanded="false"
               >
                 <img
-                  src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+                  src="https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg"
                   className="rounded-circle"
                   height="25"
+                  width="25"
                   alt="Black and White Portrait of a Man"
                   loading="lazy"
                 />

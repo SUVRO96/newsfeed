@@ -4,10 +4,11 @@
 .comment-btn {
   outline: none !important;
   border: none !important;
+  background: none;
 }
 
 .comment-btn:active {
-  box-shadow: none !important;
+  background-color: white;
 }
 
 .txtboxItem {
@@ -17,6 +18,37 @@
   font-weight: bold;
   position: relative;
   top: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin: 0px 5px 10px 5px;
+}
+.profile_pic {
+  border: 1px solid white;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+}
+.profile_name {
+  margin: 5px;
+  font-weight: 600;
+  position: relative;
+  top: 10px;
+  margin-left: 0px;
+}
+.post_menu_icon {
+  margin-right: 10px;
+}
+.show {
+  display: block;
+}
+.not_show {
+  display: none;
+}
+.post_option ul {
+  list-style: none;
+  font-size: smaller;
+  padding: 0px 10px;
+  margin: 5px 0px;
+  position: fixed;
+  right: 170px;
+  border: 1px solid;
 }

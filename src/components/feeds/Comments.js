@@ -48,17 +48,26 @@ const Comments = ({ id }) => {
   };
 
   const addlikeFn = async () => {
-    const url = "http://localhost:4000/likes/addlike";
-    const templike = {};
-    templike.feedid = id;
-    templike.name = loginData.name;
-    templike.userid = loginData.userid;
-    const response = await axios.post(url, templike);
-    if (response.status === 201) {
-      setSuccess(true);
-      setInterval(() => {
-        setSuccess(false);
-      }, 1000);
+    const url1 = "http://localhost:4000/likes/search/forpost";
+    const templike1 = {};
+    templike1.feedid = id;
+    templike1.userid = loginData.userid;
+    const response1 = await axios.post(url1, templike1);
+    console.log(response1);
+    if (response1.data === "not liked") {
+      const url2 = "http://localhost:4000/likes/addlike";
+      const templike2 = {};
+      templike2.likeid = "l" + parseInt(Math.random() * 100000000000);
+      templike2.feedid = id;
+      templike2.name = loginData.name;
+      templike2.userid = loginData.userid;
+      const response2 = await axios.post(url2, templike2);
+      if (response2.status === 201) {
+        setSuccess(true);
+        setInterval(() => {
+          setSuccess(false);
+        }, 1000);
+      }
     }
   };
 
@@ -67,12 +76,11 @@ const Comments = ({ id }) => {
     loadLikesFn();
   }, [success]);
 
-  console.log(id);
   return (
     <>
       <hr />
       <p style={{ fontSize: "10px", marginLeft: "5px", fontWeight: "bold" }}>
-        {likes.length} likes {allComments.length} comments
+        {likes.length} likes , {allComments.length} comments
       </p>
       <div className="border border-white rounded d-flex">
         <input
@@ -80,8 +88,12 @@ const Comments = ({ id }) => {
           ref={commentRef}
           placeholder="write your comment"
         />
-        <button className=" my-1 comment-btn" onClick={commentFn}>
-          <i class="fa-regular fa-paper-plane"></i>
+        <button
+          className=" my-1 comment-btn"
+          onClick={commentFn}
+          style={{ height: "50%" }}
+        >
+          <i class="fa-solid fa-circle-plus"></i>
         </button>
         <button
           className=" m-1 comment-btn"
@@ -104,7 +116,7 @@ const Comments = ({ id }) => {
         {showComments &&
           allComments &&
           allComments.map(comment => (
-            <div>
+            <div key={comment.commentid}>
               <p className="ms-3" style={{ fontSize: "12px" }}>
                 <span className="fw-bold">{comment.name}:</span>
                 <span> "{comment.text}"</span>

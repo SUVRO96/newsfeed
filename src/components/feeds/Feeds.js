@@ -5,13 +5,13 @@ import LeftSide from "../common/LeftSide";
 import RightSide from "../common/RightSide";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Options from "./Options";
 
 const Feeds = () => {
   const [postItem, setPostItem] = useState([]);
   const navigate = useNavigate();
   const [successPost, setSuccessPost] = useState(false);
   const loginData = useSelector(state => state.login.loginDataRedux);
-  console.log(loginData);
   const text = useRef();
 
   const submitPost = async () => {
@@ -59,6 +59,15 @@ const Feeds = () => {
     <div className="d-flex">
       <LeftSide />
       <section className="col-8 m-2" style={{ backgroundColor: "gray" }}>
+        {/* User profile details */}
+        <div className="d-flex">
+          <img
+            src="https://i.pinimg.com/736x/25/78/61/25786134576ce0344893b33a051160b1.jpg"
+            className="profile_pic"
+            alt="profile"
+          />
+          <p className="profile_name">{loginData && loginData.name}</p>
+        </div>
         <div className="d-flex flex-column rounded text-center">
           <textarea
             className="m-2 border rounded p-2"
@@ -71,6 +80,7 @@ const Feeds = () => {
             </button>
           </span>
         </div>
+        <hr />
         {successPost && (
           <p className="alert alert-success m-2" role="alert">
             successfully posted..
@@ -89,13 +99,18 @@ const Feeds = () => {
                 style={{ backgroundColor: "white" }}
               >
                 <div className="m-1">
-                  <div className="d-flex">
-                    <img
-                      src="https://cdn-icons-png.flaticon.com/512/21/21294.png"
-                      alt="profile"
-                      style={{ height: "20px", width: "20px" }}
-                    />
-                    <p style={{ fontWeight: "bold" }}>{item.name}</p>
+                  <div className="d-flex justify-content-between">
+                    <span className="d-flex">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/21/21294.png"
+                        alt="profile"
+                        style={{ height: "20px", width: "20px" }}
+                      />
+                      <p style={{ fontWeight: "bold" }}>{item.name}</p>
+                    </span>
+                    {loginData.userid === item.userid && (
+                      <Options item={item} />
+                    )}
                   </div>
                   {item.itemText && (
                     <p className="ps-3 post-text">{item.itemText}</p>

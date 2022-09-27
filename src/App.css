@@ -34,6 +34,7 @@
   top: 10px;
   margin-left: 0px;
 }
+
 .post_menu_icon {
   margin-right: 10px;
 }
@@ -43,12 +44,17 @@
 .not_show {
   display: none;
 }
+
 .post_option ul {
   list-style: none;
   font-size: smaller;
   padding: 0px 10px;
   margin: 5px 0px;
-  position: fixed;
-  right: 170px;
+  /* position: fixed;
+  right: 170px; */
   border: 1px solid;
+}
+
+.option_icon {
+  margin-right: 5px;
 }

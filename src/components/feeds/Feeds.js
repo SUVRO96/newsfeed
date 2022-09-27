@@ -5,12 +5,13 @@ import LeftSide from "../common/LeftSide";
 import RightSide from "../common/RightSide";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Options from "./Options";
 
 const Feeds = () => {
   const [postItem, setPostItem] = useState([]);
   const navigate = useNavigate();
   const [successPost, setSuccessPost] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(true);
+  const [editPost, setEditPost] = useState({});
   const loginData = useSelector(state => state.login.loginDataRedux);
   const text = useRef();
 
@@ -38,10 +39,35 @@ const Feeds = () => {
     const url = "http://localhost:4000/feeditems/allitems";
     try {
       const response = await axios.get(url);
-      console.log(response);
       setPostItem(response.data.reverse());
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const editFn = id => {
+    const editItem = postItem.find(item => {
+      return item.id === id;
+    });
+    console.log(editItem);
+    setToggleEdit(false);
+    setEditPost(editItem);
+    text.current.value = editItem.itemText;
+  };
+
+  const savePost = async () => {
+    const newUrl = `http://localhost:4000/feeditems/edititem/${editPost.id}`;
+    console.log(newUrl);
+    const tempObj = {};
+    tempObj.id = editPost.id;
+    tempObj.userid = editPost.userid;
+    tempObj.name = editPost.name;
+    tempObj.itemText = text.current.value;
+    const response = await axios.put(newUrl, tempObj);
+    if (response.status === 201) {
+      console.log(editPost);
+      setToggleEdit(true);
+      text.current.value = "";
     }
   };
 
@@ -53,7 +79,7 @@ const Feeds = () => {
 
   useEffect(() => {
     callItemApi();
-  }, [successPost]);
+  }, [successPost, toggleEdit]);
 
   return (
     <div className="d-flex">
@@ -75,9 +101,15 @@ const Feeds = () => {
             placeholder="What's on your mind..."
           ></textarea>
           <span className="align-self-end">
-            <button className="btn btn-sm btn-info mx-2" onClick={submitPost}>
-              Post
-            </button>
+            {toggleEdit ? (
+              <button className="btn btn-sm btn-info mx-2" onClick={submitPost}>
+                Post
+              </button>
+            ) : (
+              <button className="btn btn-sm btn-info mx-2" onClick={savePost}>
+                Save
+              </button>
+            )}
           </span>
         </div>
         <hr />
@@ -109,7 +141,15 @@ const Feeds = () => {
                       <p style={{ fontWeight: "bold" }}>{item.name}</p>
                     </span>
                     {loginData.userid === item.userid && (
-                      <Options item={item} />
+                      <div>
+                        <i
+                          className="fa-solid fa-pen-to-square option_icon"
+                          onClick={() => {
+                            editFn(item.id);
+                          }}
+                        ></i>
+                        <i className="fa-solid fa-trash option_icon"></i>
+                      </div>
                     )}
                   </div>
                   {item.itemText && (
